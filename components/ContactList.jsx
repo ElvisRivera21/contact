@@ -1,5 +1,4 @@
-
-
+import React, { useState, useEffect } from 'react';
 import ContactRow from './ContactRow';
 
 const dummyContacts = [
@@ -8,9 +7,28 @@ const dummyContacts = [
     { id: 3, name: "BB-8", phone: "888-888-8888", email: "bb8@droids.com" },
 ];
 
+const ContactList = () => {
+    const [contacts, setContacts] = useState([]);
 
-const ContactList = ({ contacts }) => {
     console.log("Contacts: ", contacts);
+
+    useEffect(() => {
+        async function fetchContacts() {
+            try {
+                const response = await fetch(
+                    "https://jsonplace-univclone.herokuapp.com/users"
+                );
+                const result = await response.json();
+                setContacts(result);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        console.log("Fetching contacts...");
+        fetchContacts();
+    }, []);
+
     return (
         <div>
             <table>
@@ -24,11 +42,7 @@ const ContactList = ({ contacts }) => {
                 <tbody>
                     {/* Add rows dynamically based on contacts data */}
                     {contacts.map((contact) => (
-                        <tr key={contact.id}>
-                            <td>{contact.name}</td>
-                            <td>{contact.email}</td>
-                            <td>{contact.phone}</td>
-                        </tr>
+                        <ContactRow key={contact.id} contact={contact} />
                     ))}
                 </tbody>
             </table>
