@@ -1,20 +1,12 @@
-import { useState } from 'react'
+import React from 'react';
 
-import './App.css'
+import './App.css';
 
-function App() {
- 
-
+import ContactList from './components/ContactList';
+export default function App() {
   return (
     <>
-      <div>
-     
-      </div>
-      <h1>Contacts</h1>
-     
-      
+      <ContactList />
     </>
-  )
+  );
 }
-
-export default App
