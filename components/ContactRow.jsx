@@ -1,3 +1,4 @@
+// ContactRow.jsx
 import React from 'react';
 
 const ContactRow = ({ contact }) => {
