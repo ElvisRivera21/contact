@@ -1,14 +1,22 @@
-// ContactRow.jsx
-import React from 'react';
+import PropTypes from 'prop-types';
 
-const ContactRow = ({ contact }) => {
+ContactRow.propTypes = {
+    contact: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        phone: PropTypes.string.isRequired,
+        // Include other properties of 'contact' as needed
+    }).isRequired,
+    setSelectedContactId: PropTypes.func.isRequired,
+};
+
+export default function ContactRow({ contact, setSelectedContactId }) {
     return (
-        <tr>
+        <tr onClick={() => setSelectedContactId(contact.id)}>
             <td>{contact.name}</td>
             <td>{contact.email}</td>
             <td>{contact.phone}</td>
         </tr>
     );
-};
-
-export default ContactRow;
+}

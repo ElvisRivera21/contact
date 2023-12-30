@@ -1,41 +1,40 @@
-// In SelectedContact.jsx
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-function SelectedContact({ contactId }) {
-    const [selectedContact, setSelectedContact] = useState(null);
-
+export default function SelectedContact({ selectedContactId, setSelectedContactId }) {
+    const [contact, setContact] = useState(null);
+    SelectedContact.propTypes = {
+        selectedContactId: PropTypes.number.isRequired,
+        setSelectedContactId: PropTypes.func.isRequired,
+    };
     useEffect(() => {
-        // Fetch data for the selected contact using contactId
-        const fetchSelectedContact = async () => {
+        async function fetchContact() {
             try {
-                const response = await fetch(
-                    `https://jsonplace-univclone.herokuapp.com/users/${contactId}`
-                );
-                const result = await response.json();
-                setSelectedContact(result);
+                const response = await fetch(`https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users/${selectedContactId}`);
+                const data = await response.json();
+                setContact(data);
+                console.log(data);
             } catch (error) {
                 console.error(error);
             }
-        };
+        }
 
-        console.log(`Fetching details for contactId: ${contactId}`);
-        fetchSelectedContact();
-    }, [contactId]);
+        fetchContact();
+    }, [selectedContactId]);
 
     return (
         <div>
             <h2>Contact Details</h2>
-            {selectedContact ? (
+            {contact && (
                 <div>
-                    <p>Name: {selectedContact.name}</p>
-                    <p>Email: {selectedContact.email}</p>
-                    <p>Phone: {selectedContact.phone}</p>
+                    {/* Display the contact details as desired */}
+                    <p>Name: {contact.name}</p>
+                    <p>Email: {contact.email}</p>
+                    <p>Phone: {contact.phone}</p>
+                    {/* Add other details you want to display */}
                 </div>
-            ) : (
-                <p>Loading...</p>
             )}
+            <button onClick={() => setSelectedContactId(null)}>Back to Contact List</button>
         </div>
     );
 }
-
-export default SelectedContact;
