@@ -1,27 +1,57 @@
-import React, { useState } from 'react';
-import ContactList from './components/ContactList';
-import SelectedContact from './components/SelectedContact';
+import React, { useState, useEffect } from 'react';
+import ContactRow from './components/ContactRow';
 
-function App() {
-  const [selectedContactId, setSelectedContactId] = useState(null);
+const dummyContacts = [
+  { id: 1, name: "R2-D2", phone: "222-222-2222", email: "r2d2@droids.com" },
+  { id: 2, name: "C-3PO", phone: "333-333-3333", email: "c3po@droids.com" },
+  { id: 3, name: "BB-8", phone: "888-888-8888", email: "bb8@droids.com" },
+];
+
+const ContactList = () => {
+  // State for storing contacts
+  const [contacts, setContacts] = useState(dummyContacts);
+
+  // Log contacts to the console
+  console.log("Contacts: ", contacts);
+
+  useEffect(() => {
+    // Define a new asynchronous function fetchContacts
+    const fetchContacts = async (fetchContacts) => {
+      try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+        const data = await response.json();
+        setContacts(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    // Log the contacts state variable
+    console.log('Contacts State:', contacts);
+
+    // Call the fetchContacts function
+    fetchContacts();
+  }, []);
 
   return (
-    <>
-      {/* Step 6: Conditionally render the ContactList or SelectedContact based on selectedContactId */}
-      {selectedContactId ? (
-        // Step 7 and 8: Use a ternary statement to conditionally render a div or the ContactList
-        <div>
-          {/* Display a short message when selectedContactId is truthy */}
-          <p>Selected Contact View: </p>
-        </div>
-      ) : (
-        // Render the ContactList component when selectedContactId is falsy
-        <ContactList setSelectedContactId={setSelectedContactId} />
-      )}
-    </>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* Add rows dynamically based on contacts data */}
+          {contacts.map((contact) => (
+            <ContactRow key={contact.id} contact={contact} />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
-}
+};
 
-
-
-export default App;
+export default ContactList;
