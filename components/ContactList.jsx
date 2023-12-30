@@ -8,10 +8,12 @@ const dummyContacts = [
 ];
 
 const ContactList = () => {
-    const [contacts, setContacts] = useState([]);
+    // State for storing contacts
+    const [contacts, setContacts] = useState(dummyContacts);
 
+    // Log contacts to the console
     console.log("Contacts: ", contacts);
-
+    
     // Use useEffect to fetch data from the API or use dummy data
     useEffect(() => {
         // For now, let's use the dummyContacts array as the default value
