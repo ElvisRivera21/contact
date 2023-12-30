@@ -14,10 +14,21 @@ const ContactList = () => {
     // Log contacts to the console
     console.log("Contacts: ", contacts);
     
-    // Use useEffect to fetch data from the API or use dummy data
     useEffect(() => {
-        // For now, let's use the dummyContacts array as the default value
-        setContacts(dummyContacts);
+        // Define a new asynchronous function fetchContacts
+        const fetchContacts = async () => {
+            try {
+                //  fetching logic using the fetch API
+                const response = await fetch('https://jsonplaceholder.typicode.com/users');
+                const data = await response.json();
+                setContacts(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        // Call the fetchContacts function
+        fetchContacts();
     }, []); // The empty dependency array ensures this runs only once on mount
 
     return (
