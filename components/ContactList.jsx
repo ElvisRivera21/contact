@@ -27,6 +27,9 @@ const ContactList = () => {
             }
         };
 
+        // Log the contacts state variable
+        console.log('Contacts State:', contacts);
+
         // Call the fetchContacts function
         fetchContacts();
     }, []); // The empty dependency array ensures this runs only once on mount
