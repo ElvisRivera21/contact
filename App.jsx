@@ -1,22 +1,21 @@
-// App.jsx
-// App.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import ContactList from './components/ContactList';
+import SelectedContact from './components/SelectedContact';
 
-const App = () => {
-  const contacts = [
-    { id: 1, name: 'John Doe', email: 'john@example.com' },
-    { id: 2, name: 'Jane Doe', email: 'jane@example.com' },
-    // Add more contacts as needed
-  ];
+function App() {
+  const [selectedContactId, setSelectedContactId] = useState(null);
 
   return (
     <>
-      {/* Other components or content */}
-      <ContactList contacts={contacts} />
-      {/* Other components or content */}
+      {selectedContactId ? (
+        <SelectedContact contactId={selectedContactId} />
+      ) : (
+        <ContactList setSelectedContactId={setSelectedContactId} />
+      )}
     </>
   );
-};
+}
+
+
 
 export default App;

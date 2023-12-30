@@ -12,22 +12,11 @@ const ContactList = () => {
 
     console.log("Contacts: ", contacts);
 
+    // Use useEffect to fetch data from the API or use dummy data
     useEffect(() => {
-        async function fetchContacts() {
-            try {
-                const response = await fetch(
-                    "https://jsonplace-univclone.herokuapp.com/users"
-                );
-                const result = await response.json();
-                setContacts(result);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        console.log("Fetching contacts...");
-        fetchContacts();
-    }, []);
+        // For now, let's use the dummyContacts array as the default value
+        setContacts(dummyContacts);
+    }, []); // The empty dependency array ensures this runs only once on mount
 
     return (
         <div>
